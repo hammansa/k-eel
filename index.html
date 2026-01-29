@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>K-민물(홍삼)장어 - 대한민국 활력의 기준</title>
+  <meta name="description" content="100% 국내산 자포니카 민물(홍삼)장어 산지직송." />
+
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Top Header (쇼핑몰 톤) -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <h1 class="logo" aria-label="K-민물(홍삼)장어">
+        <a href="#hero" class="brand" aria-label="홈으로">
+          <img id="brandLogo" class="brand-logo" src="assets/logo.png" alt="K-민물장어 로고" loading="eager" />
+          <span id="brandName" class="brand-name">K-민물(홍삼)장어</span>
+        </a>
+      </h1>
+      <nav class="top-actions">
+        <a class="top-link" href="#order-section">바로주문</a>
+        <a class="top-link" href="#options">옵션</a>
+        <a class="top-link" href="#admin">관리자</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero as "main banner" (비디오 유지, 높이 축소/화이트 베이스) -->
+    <section id="hero" class="hero-banner">
+      <div class="hero-media">
+        <video autoplay muted loop playsinline class="hero-video">
+          <source src="assets/liveeel.mp4" type="video/mp4" />
+        </video>
+        <div class="hero-grad"></div>
+      </div>
+
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <span class="hero-chip" id="heroChip">산지직송 프리미엄</span>
+          <h2 class="hero-title" id="heroTitle">대한민국 활력의 기준, K-민물(홍삼)장어</h2>
+          <p class="hero-sub" id="heroSub">오늘 주문하면 내일 식탁으로. 100% 자포니카의 힘.</p>
+
+          <div class="hero-quick">
+            <div class="hero-quick__item">
+              <div class="hero-quick__k">기준가</div>
+              <div class="hero-quick__v"><span id="hero-price-per-kg">49,000</span>원 / 1kg</div>
+            </div>
+            <div class="hero-quick__item">
+              <div class="hero-quick__k">혜택</div>
+              <div class="hero-quick__v" id="hero-benefit-summary">3kg 이상 무료배송 · 5kg 특전</div>
+            </div>
+          </div>
+
+          <div class="hero-cta">
+            <a class="btn btn-primary" href="#options">옵션 선택하고 주문 준비하기</a>
+            <a class="btn btn-outline" href="#order-section">카카오로 주문 보내기</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+  <script src="app.js" defer></script>
+      if(!t) return;
+      t.textContent = msg;
+      t.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer=setTimeout(()=>t.classList.remove('show'), 2400);
+    }
+
+    // chips
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('.chip');
+      if (!btn) return;
+      document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      renderGrids(btn.dataset.filter || 'best');
+    });
+
+    // qty/price
+    function changeQty(delta) {
+      currentQty = Math.max(1, currentQty + delta);
+      document.getElementById('quantity').value = currentQty;
+      updatePrice();
+    }
+
+    function updatePrice() {
+      const total = currentQty * Number(runtimeConfig.pricePerKg || 0);
+      document.getElementById('total-price').textContent = formatKRW(total) + '원';
+
+      // summary box
+      const osQty = document.getElementById('os-qty');
+      const osTotal = document.getElementById('os-total');
+      const osBenefit = document.getElementById('os-benefit');
+      if (osQty) osQty.textContent = String(currentQty);
+      if (osTotal) osTotal.textContent = formatKRW(total) + '원';
+      if (osBenefit) osBenefit.textContent = currentBenefitText();
+
+      const badge = document.getElementById('benefit-badge');
+      if (currentQty >= Number(runtimeConfig.benefit2_Condition)) {
+        badge.textContent = runtimeConfig.benefit2_Text;
+        badge.classList.add('active');
+      } else if (currentQty >= Number(runtimeConfig.benefit1_Condition)) {
+        badge.textContent = runtimeConfig.benefit1_Text;
+        badge.classList.add('active');
+      } else {
+        badge.classList.remove('active');
+      }
+    }
+
+    function selectOption(kg) {
+      const targetKg = Math.max(1, Number(kg || 1));
+      selectedKg = targetKg;
+      scrollToOrderAndMaybeSetQty(targetKg);
+      setSelectedCard(targetKg);
+      showToast(`${targetKg}kg 옵션 선택됨 · ${currentBenefitText()}`);
+    }
+
+    
+
+</body>
+</html>

@@ -1,0 +1,12 @@
+node_modules/
+dist/
+build/
+eslint-report.json
+scripts_extracted.js
+.DS_Store
+.env
+.vscode/
+npm-debug.log*
+*.log
+/.cache/
+/.parcel-cache/
